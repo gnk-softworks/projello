@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Surface colors */
+  --color-surface-0: #09090b;
+  --color-surface-50: #18181b;
+  --color-surface-100: #27272a;
+  --color-surface-200: #3f3f46;
+  --color-surface-300: #52525b;
+  --color-surface-400: #71717a;
+  --color-surface-500: #a1a1aa;
+  --color-surface-600: #d4d4d8;
+  --color-surface-700: #e4e4e7;
+  --color-surface-800: #f4f4f5;
+  --color-surface-900: #fafafa;
+
+  /* Primary */
+  --color-primary: #818cf8;
+  --color-primary-hover: #6366f1;
+  --color-primary-muted: rgba(129, 140, 248, 0.15);
+
+  /* Accent */
+  --color-accent: #34d399;
+  --color-accent-hover: #10b981;
+  --color-accent-muted: rgba(52, 211, 153, 0.15);
+
+  /* Semantic */
+  --color-danger: #f87171;
+  --color-danger-hover: #ef4444;
+  --color-danger-muted: rgba(248, 113, 113, 0.15);
+  --color-warning: #fbbf24;
+  --color-warning-muted: rgba(251, 191, 36, 0.15);
+  --color-success: #34d399;
+  --color-success-muted: rgba(52, 211, 153, 0.15);
+  --color-info: #60a5fa;
+  --color-info-muted: rgba(96, 165, 250, 0.15);
+
+  /* Priority colors */
+  --color-priority-low: #60a5fa;
+  --color-priority-medium: #fbbf24;
+  --color-priority-high: #fb923c;
+  --color-priority-urgent: #f87171;
+
+  /* Project colors */
+  --color-project-indigo: #818cf8;
+  --color-project-rose: #fb7185;
+  --color-project-amber: #fbbf24;
+  --color-project-emerald: #34d399;
+  --color-project-cyan: #22d3ee;
+  --color-project-violet: #a78bfa;
+  --color-project-pink: #f472b6;
+  --color-project-orange: #fb923c;
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Border radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-modal: 0 25px 50px rgba(0, 0, 0, 0.5);
+  --shadow-dropdown: 0 10px 25px rgba(0, 0, 0, 0.4);
+
+  /* Animations */
+  --animate-fade-in: fade-in 0.2s ease-out;
+  --animate-slide-up: slide-up 0.2s ease-out;
+  --animate-scale-in: scale-in 0.15s ease-out;
+
+  /* Background/foreground */
+  --color-background: #09090b;
+  --color-foreground: #fafafa;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Base styles */
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-200);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-surface-300);
+}
+
+/* Focus ring utility */
+.focus-ring {
+  @apply outline-none ring-2 ring-primary/50 ring-offset-2 ring-offset-surface-0;
+}
