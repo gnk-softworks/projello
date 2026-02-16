@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS projects (
   description TEXT DEFAULT '',
   color TEXT NOT NULL DEFAULT '#6366f1',
   scratchpad TEXT DEFAULT '',
+  source_directory TEXT DEFAULT '',
   created_at INTEGER NOT NULL DEFAULT (unixepoch()),
   updated_at INTEGER NOT NULL DEFAULT (unixepoch())
 );
@@ -32,7 +33,7 @@ CREATE TABLE IF NOT EXISTS tasks (
   updated_at INTEGER NOT NULL DEFAULT (unixepoch())
 );
 
-CREATE TABLE IF NOT EXISTS notes (
+CREATE TABLE IF NOT EXISTS updates (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   project_id INTEGER NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
   content TEXT NOT NULL,
@@ -48,6 +49,14 @@ function createConnection() {
 
   // Auto-create tables if this is a fresh database
   sqlite.exec(DB_SCHEMA_SQL);
+
+  // Migrate: add source_directory column if missing (existing databases)
+  const cols = sqlite.pragma("table_info(projects)") as { name: string }[];
+  if (!cols.some((c) => c.name === "source_directory")) {
+    sqlite.exec(
+      "ALTER TABLE projects ADD COLUMN source_directory TEXT DEFAULT ''"
+    );
+  }
 
   return sqlite;
 }

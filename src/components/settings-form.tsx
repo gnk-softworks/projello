@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { updateDatabasePath } from "@/actions/settings";
+import { updateDatabasePath, updateClaudeCodeEnabled } from "@/actions/settings";
 import { useRouter } from "next/navigation";
 
 interface SettingsFormProps {
@@ -13,14 +13,25 @@ interface SettingsFormProps {
     resolvedPath: string;
     exists: boolean;
     sizeFormatted: string;
+    claudeCodeEnabled: boolean;
   };
 }
 
 export function SettingsForm({ settings }: SettingsFormProps) {
   const [dbPath, setDbPath] = useState(settings.databasePath);
+  const [claudeEnabled, setClaudeEnabled] = useState(settings.claudeCodeEnabled);
   const [isPending, startTransition] = useTransition();
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const router = useRouter();
+
+  function handleToggleClaude() {
+    const next = !claudeEnabled;
+    setClaudeEnabled(next);
+    startTransition(async () => {
+      await updateClaudeCodeEnabled(next);
+      router.refresh();
+    });
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -39,6 +50,44 @@ export function SettingsForm({ settings }: SettingsFormProps) {
 
   return (
     <div className="space-y-6">
+      <Card className="p-6">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h2 className="text-sm font-semibold text-surface-700 mb-1">Claude Code Integration</h2>
+            <p className="text-xs text-surface-400">
+              Enable the &quot;Complete with Agent&quot; button on tasks. This sends the task to{" "}
+              <a
+                href="https://docs.anthropic.com/en/docs/claude-code/overview"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                Claude Code
+              </a>
+              , Anthropic&apos;s CLI coding agent, which can plan and implement tasks
+              directly in your project&apos;s terminal. Requires Claude Code to be installed
+              and available as <code className="text-surface-500 bg-surface-100 px-1 rounded">claude</code> in your PATH.
+            </p>
+          </div>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={claudeEnabled}
+            onClick={handleToggleClaude}
+            disabled={isPending}
+            className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
+              claudeEnabled ? "bg-primary" : "bg-surface-200"
+            }`}
+          >
+            <span
+              className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow-lg ring-0 transition-transform duration-200 ${
+                claudeEnabled ? "translate-x-5" : "translate-x-0"
+              }`}
+            />
+          </button>
+        </div>
+      </Card>
+
       <Card className="p-6">
         <h2 className="text-sm font-semibold text-surface-700 mb-4">Current Database</h2>
         <div className="space-y-3">

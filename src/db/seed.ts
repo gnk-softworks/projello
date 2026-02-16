@@ -15,7 +15,7 @@ function seed() {
   console.log("Seeding database...");
 
   // Clear existing data
-  db.delete(schema.notes).run();
+  db.delete(schema.updates).run();
   db.delete(schema.tasks).run();
   db.delete(schema.columns).run();
   db.delete(schema.projects).run();
@@ -121,7 +121,7 @@ function seed() {
     .run();
 
   // Notes for project 1
-  db.insert(schema.notes)
+  db.insert(schema.updates)
     .values([
       { projectId: project1.id, content: "Kickoff meeting went well. Team aligned on new design direction with focus on minimalism and accessibility." },
       { projectId: project1.id, content: "Decided to use Tailwind CSS v4 with the new @theme configuration. Much cleaner than the old config file approach." },
@@ -130,14 +130,14 @@ function seed() {
     .run();
 
   // Notes for project 2
-  db.insert(schema.notes)
+  db.insert(schema.updates)
     .values([
       { projectId: project2.id, content: "Using React Native with Expo for faster development. Will target iOS first, then Android." },
     ])
     .run();
 
   console.log("Seed complete!");
-  console.log("Created 3 projects with columns, tasks, and notes.");
+  console.log("Created 3 projects with columns, tasks, and updates.");
   process.exit(0);
 }
 

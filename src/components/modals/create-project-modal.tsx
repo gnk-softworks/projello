@@ -26,17 +26,23 @@ interface CreateProjectModalProps {
 
 export function CreateProjectModal({ open, onClose }: CreateProjectModalProps) {
   const [color, setColor] = useState(PROJECT_COLORS[0].value);
+  const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setError(null);
     const formData = new FormData(e.currentTarget);
     formData.set("color", color);
 
     startTransition(async () => {
-      await createProject(formData);
-      onClose();
-      setColor(PROJECT_COLORS[0].value);
+      try {
+        await createProject(formData);
+        onClose();
+        setColor(PROJECT_COLORS[0].value);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Something went wrong");
+      }
     });
   }
 
@@ -59,6 +65,12 @@ export function CreateProjectModal({ open, onClose }: CreateProjectModalProps) {
             label="Description"
             placeholder="What's this project about?"
             rows={3}
+          />
+          <Input
+            id="sourceDirectory"
+            name="sourceDirectory"
+            label="Source Directory"
+            placeholder="/path/to/source (optional)"
           />
           <div className="space-y-1.5">
             <label className="block text-sm font-medium text-surface-500">Color</label>
@@ -84,6 +96,11 @@ export function CreateProjectModal({ open, onClose }: CreateProjectModalProps) {
             </div>
           </div>
         </DialogBody>
+        {error && (
+          <div className="mx-6 mb-2 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
+            {error}
+          </div>
+        )}
         <DialogFooter>
           <Button type="button" variant="ghost" onClick={onClose}>
             Cancel

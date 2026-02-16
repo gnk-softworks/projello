@@ -20,6 +20,7 @@ export async function getSettings() {
     resolvedPath: dbPath,
     exists,
     sizeBytes,
+    claudeCodeEnabled: config.claudeCodeEnabled,
   };
 }
 
@@ -38,7 +39,8 @@ export async function updateDatabasePath(newPath: string) {
     fs.mkdirSync(dir, { recursive: true });
   }
 
-  saveConfig({ databasePath: resolved });
+  const config = getConfig();
+  saveConfig({ ...config, databasePath: resolved });
 
   // Reset the db connection so next query picks up the new path
   resetDb();
@@ -62,4 +64,19 @@ export async function getSettingsDisplay() {
     ...settings,
     sizeFormatted: formatBytes(settings.sizeBytes),
   };
+}
+
+export async function updateClaudeCodeEnabled(enabled: boolean) {
+  const config = getConfig();
+  saveConfig({ ...config, claudeCodeEnabled: enabled });
+
+  revalidatePath("/");
+  revalidatePath("/settings");
+
+  return { claudeCodeEnabled: enabled };
+}
+
+export async function isClaudeCodeEnabled(): Promise<boolean> {
+  const config = getConfig();
+  return config.claudeCodeEnabled;
 }

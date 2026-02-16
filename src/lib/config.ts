@@ -7,6 +7,7 @@ const DEFAULT_DB_NAME = "projello.db";
 
 export interface ProjelloConfig {
   databasePath: string;
+  claudeCodeEnabled: boolean;
 }
 
 function ensureDir(dir: string) {
@@ -23,14 +24,17 @@ export function getConfig(): ProjelloConfig {
       const raw = fs.readFileSync(CONFIG_FILE, "utf-8");
       const config = JSON.parse(raw) as Partial<ProjelloConfig>;
       if (config.databasePath) {
-        return { databasePath: config.databasePath };
+        return {
+          databasePath: config.databasePath,
+          claudeCodeEnabled: config.claudeCodeEnabled ?? false,
+        };
       }
     } catch {
       // Corrupt config — fall through to default
     }
   }
 
-  return { databasePath: path.join(PROJELLO_DIR, DEFAULT_DB_NAME) };
+  return { databasePath: path.join(PROJELLO_DIR, DEFAULT_DB_NAME), claudeCodeEnabled: false };
 }
 
 export function saveConfig(config: ProjelloConfig) {
@@ -41,7 +45,11 @@ export function saveConfig(config: ProjelloConfig) {
     : path.resolve(process.cwd(), config.databasePath);
   fs.writeFileSync(
     CONFIG_FILE,
-    JSON.stringify({ databasePath: resolved }, null, 2) + "\n",
+    JSON.stringify(
+      { databasePath: resolved, claudeCodeEnabled: config.claudeCodeEnabled },
+      null,
+      2
+    ) + "\n",
     "utf-8"
   );
 }

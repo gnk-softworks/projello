@@ -29,6 +29,7 @@ interface KanbanBoardProps {
   projectId: number;
   initialColumns: Column[];
   initialTasks: Task[];
+  hasTerminal?: boolean;
 }
 
 type ColumnTasks = Record<number, Task[]>;
@@ -47,6 +48,7 @@ export function KanbanBoard({
   projectId,
   initialColumns,
   initialTasks,
+  hasTerminal,
 }: KanbanBoardProps) {
   const [cols, setCols] = useState(initialColumns);
   const [columnTasks, setColumnTasks] = useState<ColumnTasks>(() =>
@@ -283,6 +285,14 @@ export function KanbanBoard({
         onClose={() => setEditTask(null)}
         task={editTask}
         projectId={projectId}
+        showAgentButton={
+          hasTerminal &&
+          !!editTask &&
+          !!cols
+            .find((c) => c.id === editTask.columnId)
+            ?.name.toLowerCase()
+            .includes("progress")
+        }
       />
     </>
   );

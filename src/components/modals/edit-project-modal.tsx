@@ -25,6 +25,7 @@ interface EditProjectModalProps {
     name: string;
     description: string | null;
     color: string;
+    sourceDirectory: string | null;
   };
   open: boolean;
   onClose: () => void;
@@ -32,16 +33,22 @@ interface EditProjectModalProps {
 
 export function EditProjectModal({ project, open, onClose }: EditProjectModalProps) {
   const [color, setColor] = useState(project.color);
+  const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setError(null);
     const formData = new FormData(e.currentTarget);
     formData.set("color", color);
 
     startTransition(async () => {
-      await updateProject(project.id, formData);
-      onClose();
+      try {
+        await updateProject(project.id, formData);
+        onClose();
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Something went wrong");
+      }
     });
   }
 
@@ -64,6 +71,13 @@ export function EditProjectModal({ project, open, onClose }: EditProjectModalPro
             label="Description"
             defaultValue={project.description || ""}
             rows={3}
+          />
+          <Input
+            id="edit-sourceDirectory"
+            name="sourceDirectory"
+            label="Source Directory"
+            placeholder="/path/to/source (optional)"
+            defaultValue={project.sourceDirectory || ""}
           />
           <div className="space-y-1.5">
             <label className="block text-sm font-medium text-surface-500">Color</label>
@@ -89,6 +103,11 @@ export function EditProjectModal({ project, open, onClose }: EditProjectModalPro
             </div>
           </div>
         </DialogBody>
+        {error && (
+          <div className="mx-6 mb-2 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
+            {error}
+          </div>
+        )}
         <DialogFooter>
           <Button type="button" variant="ghost" onClick={onClose}>
             Cancel

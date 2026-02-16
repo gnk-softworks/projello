@@ -51,7 +51,7 @@ export default async function DashboardPage() {
             </svg>
           }
           title="No projects yet"
-          description="Create your first project to get started with Kanban boards, tasks, and notes."
+          description="Create your first project to get started with Kanban boards, tasks, and updates."
           action={<CreateProjectButton />}
         />
       ) : (

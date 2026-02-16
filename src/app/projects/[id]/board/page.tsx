@@ -4,6 +4,7 @@ import { eq, asc } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { KanbanBoard } from "@/components/kanban-board";
 import { ProjectHeader } from "@/components/project-header";
+import { isClaudeCodeEnabled } from "@/actions/settings";
 
 export default async function BoardPage({
   params,
@@ -36,6 +37,8 @@ export default async function BoardPage({
     projectTasks.push(...colTasks);
   }
 
+  const claudeEnabled = await isClaudeCodeEnabled();
+
   return (
     <div className="h-full flex flex-col">
       <ProjectHeader project={project} activeTab="board" />
@@ -44,6 +47,7 @@ export default async function BoardPage({
           projectId={projectId}
           initialColumns={projectColumns}
           initialTasks={projectTasks}
+          hasTerminal={!!project.sourceDirectory && claudeEnabled}
         />
       </div>
     </div>

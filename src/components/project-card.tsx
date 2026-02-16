@@ -15,6 +15,7 @@ interface ProjectCardProps {
     name: string;
     description: string | null;
     color: string;
+    sourceDirectory: string | null;
     createdAt: Date;
     updatedAt: Date;
   };
@@ -90,7 +91,7 @@ export function ProjectCard({ project, columnCount, taskCount }: ProjectCardProp
         open={showDelete}
         onClose={() => setShowDelete(false)}
         title="Delete project"
-        description={`Are you sure you want to delete "${project.name}"? All columns, tasks, and notes will be permanently deleted.`}
+        description={`Are you sure you want to delete "${project.name}"? All columns, tasks, and updates will be permanently deleted.`}
         onConfirm={async () => {
           await deleteProject(project.id);
           setShowDelete(false);

@@ -2,17 +2,30 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 interface ProjectHeaderProps {
-  project: { id: number; name: string; description: string | null; color: string };
-  activeTab: "scratchpad" | "board" | "notes";
+  project: {
+    id: number;
+    name: string;
+    description: string | null;
+    color: string;
+    sourceDirectory: string | null;
+  };
+  activeTab: "scratchpad" | "board" | "updates" | "terminal";
 }
 
-const tabs = [
+const baseTabs = [
   { key: "scratchpad", label: "Scratchpad", href: (id: number) => `/projects/${id}` },
   { key: "board", label: "Board", href: (id: number) => `/projects/${id}/board` },
-  { key: "notes", label: "Notes", href: (id: number) => `/projects/${id}/notes` },
-] as const;
+  { key: "updates", label: "Updates", href: (id: number) => `/projects/${id}/updates` },
+];
 
 export function ProjectHeader({ project, activeTab }: ProjectHeaderProps) {
+  const tabs = project.sourceDirectory
+    ? [
+        ...baseTabs,
+        { key: "terminal", label: "Terminal", href: (id: number) => `/projects/${id}/terminal` },
+      ]
+    : baseTabs;
+
   return (
     <div className="px-4 pt-14 pb-4 md:px-6 md:pt-6 border-b border-surface-200 shrink-0">
       <div className="flex items-center gap-3 mb-3">

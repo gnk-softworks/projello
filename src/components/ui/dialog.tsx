@@ -68,7 +68,7 @@ export function DialogFooter({ children, className }: { children: ReactNode; cla
   return (
     <div
       className={cn(
-        "px-4 py-3 md:px-6 md:py-4 flex items-center justify-end gap-3 border-t border-surface-200",
+        "px-4 py-3 md:px-6 md:py-4 flex flex-wrap items-center justify-end gap-2 md:gap-3 border-t border-surface-200",
         className
       )}
     >

@@ -7,6 +7,7 @@ export const projects = sqliteTable("projects", {
   description: text("description").default(""),
   color: text("color").notNull().default("#6366f1"),
   scratchpad: text("scratchpad").default(""),
+  sourceDirectory: text("source_directory").default(""),
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
     .$defaultFn(() => new Date()),
@@ -45,7 +46,7 @@ export const tasks = sqliteTable("tasks", {
     .$defaultFn(() => new Date()),
 });
 
-export const notes = sqliteTable("notes", {
+export const updates = sqliteTable("updates", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   projectId: integer("project_id")
     .notNull()
@@ -59,7 +60,7 @@ export const notes = sqliteTable("notes", {
 // Relations
 export const projectsRelations = relations(projects, ({ many }) => ({
   columns: many(columns),
-  notes: many(notes),
+  updates: many(updates),
 }));
 
 export const columnsRelations = relations(columns, ({ one, many }) => ({
@@ -77,9 +78,9 @@ export const tasksRelations = relations(tasks, ({ one }) => ({
   }),
 }));
 
-export const notesRelations = relations(notes, ({ one }) => ({
+export const updatesRelations = relations(updates, ({ one }) => ({
   project: one(projects, {
-    fields: [notes.projectId],
+    fields: [updates.projectId],
     references: [projects.id],
   }),
 }));
@@ -91,5 +92,5 @@ export type Column = typeof columns.$inferSelect;
 export type NewColumn = typeof columns.$inferInsert;
 export type Task = typeof tasks.$inferSelect;
 export type NewTask = typeof tasks.$inferInsert;
-export type Note = typeof notes.$inferSelect;
-export type NewNote = typeof notes.$inferInsert;
+export type Update = typeof updates.$inferSelect;
+export type NewUpdate = typeof updates.$inferInsert;
