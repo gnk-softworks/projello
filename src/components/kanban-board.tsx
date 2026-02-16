@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useCallback } from "react";
+import { useState, useTransition, useCallback, useEffect } from "react";
 import {
   DndContext,
   DragOverlay,
@@ -48,11 +48,17 @@ export function KanbanBoard({
   initialColumns,
   initialTasks,
 }: KanbanBoardProps) {
-  const [cols] = useState(initialColumns);
+  const [cols, setCols] = useState(initialColumns);
   const [columnTasks, setColumnTasks] = useState<ColumnTasks>(() =>
     groupTasksByColumn(initialTasks, initialColumns)
   );
   const [activeTask, setActiveTask] = useState<Task | null>(null);
+
+  // Sync local state when server data changes (after revalidatePath)
+  useEffect(() => {
+    setCols(initialColumns);
+    setColumnTasks(groupTasksByColumn(initialTasks, initialColumns));
+  }, [initialColumns, initialTasks]);
   const [createTaskForColumn, setCreateTaskForColumn] = useState<number | null>(null);
   const [editTask, setEditTask] = useState<Task | null>(null);
   const [isPending, startTransition] = useTransition();
