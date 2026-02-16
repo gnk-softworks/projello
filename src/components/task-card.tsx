@@ -62,7 +62,7 @@ export function TaskCard({ task, onEdit, isDragging }: TaskCardProps) {
 
 export function TaskCardOverlay({ task }: { task: Task }) {
   return (
-    <div className="p-3 bg-surface-0 rounded-lg border border-primary shadow-card-hover rotate-3 w-[260px]">
+    <div className="p-3 bg-surface-0 rounded-lg border border-primary shadow-card-hover rotate-3 w-[65vw] sm:w-[260px]">
       <p className="text-sm font-medium text-surface-800">{task.title}</p>
       {task.description && (
         <p className="mt-1 text-xs text-surface-400 line-clamp-2">

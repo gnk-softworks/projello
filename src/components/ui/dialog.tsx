@@ -54,21 +54,21 @@ export function Dialog({ open, onClose, children, className }: DialogProps) {
 
 export function DialogHeader({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className={cn("px-6 pt-6 pb-4", className)}>
+    <div className={cn("px-4 pt-4 pb-3 md:px-6 md:pt-6 md:pb-4", className)}>
       <h2 className="text-lg font-semibold text-surface-900">{children}</h2>
     </div>
   );
 }
 
 export function DialogBody({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cn("px-6 pb-4 space-y-4", className)}>{children}</div>;
+  return <div className={cn("px-4 pb-3 md:px-6 md:pb-4 space-y-4", className)}>{children}</div>;
 }
 
 export function DialogFooter({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div
       className={cn(
-        "px-6 py-4 flex items-center justify-end gap-3 border-t border-surface-200",
+        "px-4 py-3 md:px-6 md:py-4 flex items-center justify-end gap-3 border-t border-surface-200",
         className
       )}
     >

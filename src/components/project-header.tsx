@@ -14,7 +14,7 @@ const tabs = [
 
 export function ProjectHeader({ project, activeTab }: ProjectHeaderProps) {
   return (
-    <div className="px-6 pt-6 pb-4 border-b border-surface-200 shrink-0">
+    <div className="px-4 pt-14 pb-4 md:px-6 md:pt-6 border-b border-surface-200 shrink-0">
       <div className="flex items-center gap-3 mb-3">
         <span
           className="w-3 h-3 rounded-full"

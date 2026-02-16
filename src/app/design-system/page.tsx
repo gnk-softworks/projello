@@ -41,7 +41,7 @@ const PROJECT_COLORS = [
 
 export default function DesignSystemPage() {
   return (
-    <div className="p-8 max-w-5xl mx-auto space-y-16">
+    <div className="p-4 md:p-8 pt-14 md:pt-8 max-w-5xl mx-auto space-y-12 md:space-y-16">
       <div>
         <h1 className="text-3xl font-bold text-surface-900">Design System</h1>
         <p className="text-surface-400 mt-1">
@@ -55,7 +55,7 @@ export default function DesignSystemPage() {
 
         <div>
           <h3 className="text-sm font-medium text-surface-500 mb-3">Surface Scale</h3>
-          <div className="grid grid-cols-11 gap-2">
+          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-11 gap-2">
             {COLORS.map((c) => (
               <div key={c.name} className="text-center">
                 <div className={`w-full aspect-square rounded-lg ${c.var} border border-surface-200`} />
@@ -67,7 +67,7 @@ export default function DesignSystemPage() {
 
         <div>
           <h3 className="text-sm font-medium text-surface-500 mb-3">Semantic Colors</h3>
-          <div className="grid grid-cols-6 gap-2">
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
             {ACCENT_COLORS.map((c) => (
               <div key={c.name} className="text-center">
                 <div className={`w-full aspect-square rounded-lg ${c.var}`} />
@@ -79,7 +79,7 @@ export default function DesignSystemPage() {
 
         <div>
           <h3 className="text-sm font-medium text-surface-500 mb-3">Project Colors</h3>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             {PROJECT_COLORS.map((c) => (
               <div key={c.name} className="text-center">
                 <div className={`w-10 h-10 rounded-full ${c.var}`} />
@@ -131,10 +131,10 @@ export default function DesignSystemPage() {
       {/* Form Elements */}
       <section className="space-y-6">
         <h2 className="text-xl font-semibold text-surface-800">Form Elements</h2>
-        <div className="grid grid-cols-2 gap-6 max-w-xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-xl">
           <Input label="Name" placeholder="Enter your name" />
           <Input label="With error" placeholder="Invalid input" error="This field is required" />
-          <div className="col-span-2">
+          <div className="sm:col-span-2">
             <Textarea label="Description" placeholder="Write something..." rows={3} />
           </div>
         </div>
@@ -155,7 +155,7 @@ export default function DesignSystemPage() {
       {/* Cards */}
       <section className="space-y-6">
         <h2 className="text-xl font-semibold text-surface-800">Cards</h2>
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <Card className="p-5">
             <h3 className="font-semibold text-surface-800">Card Title</h3>
             <p className="text-sm text-surface-400 mt-1">

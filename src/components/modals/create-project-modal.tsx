@@ -62,7 +62,7 @@ export function CreateProjectModal({ open, onClose }: CreateProjectModalProps) {
           />
           <div className="space-y-1.5">
             <label className="block text-sm font-medium text-surface-500">Color</label>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {PROJECT_COLORS.map((c) => (
                 <button
                   key={c.value}
@@ -76,8 +76,8 @@ export function CreateProjectModal({ open, onClose }: CreateProjectModalProps) {
                   )}
                   style={{
                     backgroundColor: c.value,
-                    ringColor: c.value,
-                  }}
+                    "--tw-ring-color": c.value,
+                  } as React.CSSProperties}
                   title={c.name}
                 />
               ))}

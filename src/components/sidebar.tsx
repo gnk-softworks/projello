@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { projects } from "@/db/schema";
 import { asc } from "drizzle-orm";
 import { SidebarProjectList } from "./sidebar-project-list";
+import { SidebarWrapper } from "./mobile-sidebar";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -12,7 +13,7 @@ export async function Sidebar() {
     .orderBy(asc(projects.createdAt));
 
   return (
-    <aside className="w-64 h-screen flex flex-col bg-surface-50 border-r border-surface-200 shrink-0">
+    <SidebarWrapper>
       <div className="p-4 border-b border-surface-200 flex justify-center">
         <Link href="/">
           <Image src="/logo.png" alt="Projello" width={140} height={48} className="rounded-lg object-contain" />
@@ -54,6 +55,6 @@ export async function Sidebar() {
           Design System
         </Link>
       </div>
-    </aside>
+    </SidebarWrapper>
   );
 }

@@ -58,7 +58,7 @@ export function ScratchpadEditor({ projectId, initialContent }: ScratchpadEditor
 
   return (
     <div className="flex-1 flex flex-col h-full">
-      <div className="flex items-center justify-between px-6 py-2 border-b border-surface-200 shrink-0">
+      <div className="flex items-center justify-between px-4 md:px-6 py-2 border-b border-surface-200 shrink-0">
         <span className="text-xs text-surface-400">
           {saveStatus === "saving" && "Saving..."}
           {saveStatus === "saved" && "Saved"}
@@ -73,7 +73,7 @@ export function ScratchpadEditor({ projectId, initialContent }: ScratchpadEditor
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         placeholder="Start typing... your notes auto-save as you write."
-        className="flex-1 w-full p-6 bg-transparent text-surface-800 text-sm leading-relaxed resize-none focus:outline-none placeholder:text-surface-300 font-mono"
+        className="flex-1 w-full p-4 md:p-6 bg-transparent text-surface-800 text-sm leading-relaxed resize-none focus:outline-none placeholder:text-surface-300 font-mono"
         spellCheck={false}
       />
     </div>

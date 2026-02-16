@@ -30,8 +30,8 @@ export default async function DashboardPage() {
   );
 
   return (
-    <div className="p-8">
-      <div className="flex items-center justify-between mb-8">
+    <div className="p-4 md:p-8 pt-14 md:pt-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-surface-900">Dashboard</h1>
           <p className="text-sm text-surface-400 mt-1">

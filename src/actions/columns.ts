@@ -2,7 +2,7 @@
 
 import { db } from "@/lib/db";
 import { columns, tasks } from "@/db/schema";
-import { eq, gt, sql } from "drizzle-orm";
+import { eq, gt, sql, and } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 export async function createColumn(projectId: number, name: string) {
@@ -74,8 +74,7 @@ export async function deleteColumn(
     await db
       .update(columns)
       .set({ position: sql`${columns.position} - 1` })
-      .where(eq(columns.projectId, projectId))
-      .where(gt(columns.position, col.position));
+      .where(and(eq(columns.projectId, projectId), gt(columns.position, col.position)));
   }
 
   revalidatePath(`/projects/${projectId}`);
